@@ -4,8 +4,10 @@ class Player {
   }
 
   playTurn(warrior) {
-    
-    if (this.takingDamage(warrior) && this.pathClear(warrior)) {
+   
+    if (this.captiveInFront(warrior)) {
+      warrior.rescue();
+    } else if (this.takingDamage(warrior) && this.pathClear(warrior)) {
       this.health = warrior.health();
       warrior.walk();
     } else if ((this.pathBlocked(warrior) && this.healthy(warrior)) || this.takingDamage(warrior)) {
@@ -22,15 +24,25 @@ class Player {
       warrior.walk()
     }
   }
+
+  captiveInFront(warrior) {
+    return (warrior.feel().isCaptive());
+  }
+
   takingDamage(warrior) {
     return (warrior.health() < this.health);
   }
+  
   pathClear (warrior) {
     return (warrior.feel().isEmpty());
   }
 
   pathBlocked(warrior) {
-    return (! warrior.feel().isEmpty());
+    return (!warrior.feel().isEmpty());
+  }
+
+  enemyInFront(warrior) {
+    return (!warrior.feel().isEmpty() && !warrior.feel().isCaptive());
   }
 
   notHealthy(warrior) {
