@@ -17,8 +17,6 @@ class Player {
     } else if (this.notHealthy(warrior)) {
       this.health = warrior.health();
       warrior.rest();  
-    // } else if (this.pathClear(warrior) && this.notHealthy(warrior)) {
-    //   warrior.walk();
     } else {
       this.health = warrior.health();
       warrior.walk()
